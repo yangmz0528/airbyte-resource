@@ -1,12 +1,12 @@
 # Airbyte
 
-## Running Airbyte in Docker
+## 1. Running Airbyte in Docker
 In terminal, 
 ```sh 
 docker compose -f airbyte-docker-compose.yml -d
 ```
 
-## Tutorial (Google Sheets to Google BigQery)
+## 2. Tutorial (Google Sheets to Google BigQery)
 
 ### Source
 #### in airbyte
@@ -34,7 +34,7 @@ docker compose -f airbyte-docker-compose.yml -d
 2. Enter the respective information in airbyte
 3. For loading method, there are 2 ways, one is GCS staging whereby the data is loaded to Google Cloud Storage (GCS) before copying the data to load in BigQuery (recommended for production setting). Another way is to use Standard Inserts (not recommended) where it direct loading using SQL INSERT statements, this method is only for quick testing.
 
-## Tutorial (Postgre -> BigQuery using CDC)
+## 3. Tutorial (Postgres -> BigQuery using CDC)
 
 ### Create Source
 1. Create a new source for Postgres
@@ -45,7 +45,7 @@ docker compose -f airbyte-docker-compose.yml -d
 2. login with docker@docker.com, password: docker
 3. Add new server, general-name (can be anything - Airbyte Postgres), connection-hostname: airbyte-db, username: docker, password: docker
 
-### Sync Mode
+### Sync Modes
 ```sh
 Full refresh | Overwrite
 ```
@@ -55,3 +55,11 @@ Definition on the left: how airbyte reads data from the source
 Definition on the right: how airbyte writes data into the destination
 - Full Refresh | Overwrite: retrieves all data from the source, regardless of whether it has been synced before, and replaces existing data in the destination with new data.
 - Full Refresh | Append: retrieves all data from the sources, regardless of whether it has been synced before, and appends the data to the destination table.
+- Incremental | Append: reads new data from the source, since the last sync, and appends the new data to the destination table.
+- Incremental | Append + Dedup: reads new data from the source, since the last sync, appends the new data to the destination table and removes deplicates based on the primary key.
+
+### Schema Changes
+
+- Non-breaking changes: new column, delete column, new stream, delete stream(new table in Postgres db or deletion of a stream), column data type changes
+  - Propogate changes (how you want to apply the detected changes to your destination)
+- Breaking changes: 
