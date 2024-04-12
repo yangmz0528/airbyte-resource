@@ -49,10 +49,10 @@ docker compose -f airbyte-docker-compose.yml -d
 ```sh
 Full refresh | Overwrite
 ```
-cursor: value to track whether a record should be replicated (i.e: timestamp, a date)
-cursor field: field or column in the data where the cursor can be found (i.e: updated_at, created_at)
-Definition on the left: how airbyte reads data from the source
-Definition on the right: how airbyte writes data into the destination
+- cursor: value to track whether a record should be replicated (i.e: timestamp, a date)
+- cursor field: field or column in the data where the cursor can be found (i.e: updated_at, created_at)
+- Definition on the left: how airbyte reads data from the source
+- Definition on the right: how airbyte writes data into the destination
 - Full Refresh | Overwrite: retrieves all data from the source, regardless of whether it has been synced before, and replaces existing data in the destination with new data.
 - Full Refresh | Append: retrieves all data from the sources, regardless of whether it has been synced before, and appends the data to the destination table.
 - Incremental | Append: reads new data from the source, since the last sync, and appends the new data to the destination table.
